@@ -1,0 +1,112 @@
+﻿@model TestOrderApplication.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div>
+    <h2>Order details</h2>
+    <hr />
+    <dl class="form-horizontal">
+        <dt>
+            @Html.DisplayNameFor(orders => orders.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(orders => orders.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(orders => orders.Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(orders => orders.Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(orders => orders.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(orders => orders.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(orders => orders.Provider.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(orders => orders.Provider.Name)
+        </dd>
+
+    </dl>
+    <label class="control-label">Order Items: </label>
+    <table class="table">
+        <tr>
+            <th>
+                Order ID
+            </th>
+            <th>
+                Name
+                @*@Html.DisplayNameFor(orderItems => orderItems.Name)*@
+            </th>
+            <th>
+                Quantity
+                @*@Html.DisplayNameFor(orderItems => orderItems.Quantity)*@
+            </th>
+            <th>
+                Unit
+                @* @Html.DisplayNameFor(orderItems => orderItems.Unit)*@
+            </th>
+            <th></th>
+        </tr>
+
+
+        @foreach (var orderItem in ViewBag.OrderItems)
+        {
+            <tr>
+                <td>
+                    @orderItem.Id
+                </td>
+                <td>
+                    @orderItem.Name
+                    @*@Html.DisplayFor(modelItem => item.Name)*@
+                </td>
+                <td>
+                    @orderItem.Quantity
+                    @*@Html.DisplayFor(modelItem => item.Quantity)*@
+                </td>
+                <td>
+                    @orderItem.Unit
+                    @*@Html.DisplayFor(modelItem => item.Unit)*@
+                </td>
+            </tr>
+
+        }
+    </table>
+    <p></p>
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" class="btn btn-link" />
+
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-8">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+</div>

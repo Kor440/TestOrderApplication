@@ -1,0 +1,107 @@
+﻿@model IEnumerable<TestOrderApplication.Models.Order>
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form method="get">
+    <div class="form-horizontal">
+        <div class="form-group form-group-sm">
+            <div class="col-md-4">
+                <label class="control-label">Order Number: </label>
+                @Html.DropDownList("number", new SelectList(ViewBag.OrderNumber), "All",
+                                    htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Provider Name: </label>
+                @Html.DropDownList("provider", new SelectList(ViewBag.ProviderName), "All",
+                                    htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group form-group-sm">
+            <div class="col-md-4">
+                <label class="control-label">Date from: </label>
+                @Html.TextBox("dateFrom", DateTime.MinValue, new { @class = "form-control datepicker" })
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Date To: </label>
+                @Html.TextBox("dateTo", DateTime.Now, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group form-group-sm">
+            <div class="col-md-4">
+                <label class="control-label">Order Item Name: </label>
+                @Html.DropDownList("itemName", new SelectList(ViewBag.ItemName), "All",
+                                    htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Order Item Unit: </label>
+                @Html.DropDownList("itemUnit", new SelectList(ViewBag.ItemUnit), "All",
+                                    htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="Filter" class="btn btn-default" />
+</form>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Provider.Name)
+        </th>
+        <th></th>
+    </tr>
+    @*<tr>
+        <th>
+            @Html.ActionLink("Provider Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Number", "Index", new { sortOrder = ViewBag.NumberSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th></th>
+        </tr>*@
+
+    @foreach (var item in Model)
+    {
+        <tr onclick="location.href='@Url.Action("Details", "Orders", new { id = item.Id })'" onmouseover="this.style.cursor='pointer'">
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provider.Name)
+                @* @Html.ActionLink(item.Order.Provider.Name, "Details", "Orders", new { id = item.Order.Id }, null)*@
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
